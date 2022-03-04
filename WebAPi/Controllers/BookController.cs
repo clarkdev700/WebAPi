@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebAPi.Dtos;
@@ -24,6 +25,7 @@ namespace WebAPi.Controllers
 
         // GET: api/<BookController>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Get()
         {
             //return _bookRepository.GetEntities();
@@ -32,6 +34,8 @@ namespace WebAPi.Controllers
 
         // GET api/<BookController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BookDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get(int id)
         {
             var searchBook = _bookRepository.GetEntity(id, false);

@@ -54,6 +54,7 @@ namespace WebApiTest
             var includeBook = false;
             var mockRepo = new Mock<IRepository<Author>>();
             mockRepo.Setup(repo => repo.GetEntity(authorId, includeBook)).Returns(author);
+            mockRepo.Setup(repo => repo.EntityExist(author.Id)).Returns(true);
 
             var mockMapper = new Mock<IMapper>();
 
@@ -61,9 +62,10 @@ namespace WebApiTest
             var controller = new AuthorController(mockRepo.Object, mockMapper.Object);
             var result = (OkObjectResult) controller.Get(authorId, includeBook);
             var resultContent = result.Value as AuthorDto;
+
             // Assert
-            //Assert.IsInstanceOfType(result.Value, typeof(AuthorDto));
-            //Assert.AreEqual(200, result.StatusCode);
+            Assert.IsInstanceOfType(result, typeof(AuthorDto));
+            Assert.AreEqual(200, result.StatusCode);
             Assert.AreEqual(authorDto.LastName, resultContent.LastName);
             Assert.AreEqual(authorDto.Name, resultContent.LastName);
             Assert.AreEqual(authorDto.Books.Count, resultContent.Books.Count);

@@ -58,6 +58,8 @@ namespace WebAPi.Controllers
 
         // POST api/<AuthorController>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(AuthorDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Post([FromBody] AuthorCreationDto author)
         {
             if (!ModelState.IsValid)
