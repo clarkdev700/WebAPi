@@ -12,7 +12,12 @@ namespace WebAPi.Context
         public BookContext(DbContextOptions<BookContext> options) 
             : base(options)
         {
+            Database.EnsureCreated();
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
         }
 
     }
